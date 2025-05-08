@@ -73,13 +73,13 @@ class JobListing(BaseModel):
 app = FastAPI()
 
 # ---------- Routes ----------
-@app.get("/users/", response_model=List[User])
+@app.get("/users", response_model=List[User])
 def read_users():
     with SessionLocal() as session:
         users = session.query(UserDB).all()
         return users
 
-@app.post("/users/", response_model=User)
+@app.post("/users", response_model=User)
 def create_user(user: User):
     with SessionLocal() as session:
         db_user = UserDB(**user.dict())
@@ -100,13 +100,13 @@ def delete_user(user_id: int):
 
 
 
-@app.get("/employers/", response_model=List[Employer])
+@app.get("/employers", response_model=List[Employer])
 def read_employers():
     with SessionLocal() as session:
         employers = session.query(EmployerDB).all()
         return employers
 
-@app.post("/employers/", response_model=Employer)
+@app.post("/employers", response_model=Employer)
 def create_employer(employer: Employer):
     with SessionLocal() as session:
         db_employer = EmployerDB(**employer.dict())
@@ -127,13 +127,13 @@ def delete_employer(employer_id: int):
 
 
 
-@app.get("/listings/", response_model=List[JobListing])
+@app.get("/listings", response_model=List[JobListing])
 def read_listings():
     with SessionLocal() as session:
         listings = session.query(JobListingDB).all()
         return listings
 
-@app.post("/listings/", response_model=JobListing)
+@app.post("/listings", response_model=JobListing)
 def create_listing(listing: JobListing):
     with SessionLocal() as session:
         db_listing = JobListingDB(**listing.dict())

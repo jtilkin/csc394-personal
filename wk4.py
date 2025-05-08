@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from typing import List
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
+from fastapi.middleware.cors import CORSMiddleware
 
 api_key = "PUT_API_KEY_HERE"
 
@@ -71,6 +72,18 @@ class JobListing(BaseModel):
 
 # ---------- FastAPI App ----------
 app = FastAPI()
+
+origins = [
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"], 
+)
 
 # ---------- Routes ----------
 @app.get("/users", response_model=List[User])
